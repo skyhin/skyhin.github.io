@@ -692,6 +692,81 @@
         </div>
     </div>
     <script>
+      //图片预加载
+      function preloader() {
+  if (document.images) {
+    var img1 = new Image()
+    var img2 = new Image()
+    var img3 = new Image()
+    var img4 = new Image()
+    var img5 = new Image()
+    var img6 = new Image()
+    var img7 = new Image()
+    var img8 = new Image()
+    var img9 = new Image()
+    var img10 = new Image()
+    var img11 = new Image()
+    var img12 = new Image()
+    var img13 = new Image()
+    var img14 = new Image()
+    var img15 = new Image()
+    var img16 = new Image()
+    img1.src = 'image/0-1.jpg'
+    img2.src = 'image/0-2.jpg'
+    img3.src = 'image/0-3.jpg'
+    img4.src = 'image/0-4.jpg'
+    img5.src = 'image/0-5.jpg'
+    img6.src = 'image/0-6.jpg'
+    img7.src = 'image/5.jpg'
+    img8.src = 'image/6.jpg'
+    img9.src = 'image/7.jpg'
+    img10.src = 'image/9.jpg'
+    img11.src = 'image/11.jpg'
+    img12.src = 'image/13.jpg'
+    img13.src = 'image/17.jpg'
+    img14.src = 'image/战争图_05.jpg'
+    img15.src = 'image/falv.jpg'
+    img16.src = 'image/xuliyananming.jpg'
+  }
+}
+function addLoadEvent(func) {
+  var oldonload = window.onload
+  if (typeof window.onload != 'function') {
+    window.onload = func
+  } else {
+    window.onload = function () {
+      if (oldonload) {
+        oldonload()
+      }
+      func()
+    }
+  }
+}
+addLoadEvent(preloader)
+      //图片懒加载
+      const imgs = document.querySelectorAll('img[data-src]')
+      const config = {
+      rootMargin: '0px',
+      threshold: 0
+      }
+      let observer = new IntersectionObserver((entries, self) => {
+      entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+      let img = entry.target
+      let src = img.dataset.src
+      if (src) {
+        img.src = src
+        img.removeAttribute('data-src')
+      }
+      // 解除观察
+      self.unobserve(entry.target)
+      }
+      })
+      }, config)
+
+      imgs.forEach((image) => {
+        observer.observe(image)
+      })
         $(document).ready(function () {
             var part1Height = $("#partinner1").innerHeight();
             var part2Height = $("#partinner2").innerHeight();
